@@ -32,29 +32,4 @@ if (file_exists($configFile)) {
     );
 }
 
-$helperSet = ($helperSet) ?: new \Symfony\Component\Console\Helper\HelperSet();
-
-$cli = new \Symfony\Component\Console\Application('Jackalope Command Line Interface', '0.1');
-$cli->setCatchExceptions(true);
-$cli->setHelperSet($helperSet);
-$cli->addCommands(array(
-    new \PHPCR\Util\Console\Command\NodeDumpCommand(),
-    new \PHPCR\Util\Console\Command\NodeMoveCommand(),
-    new \PHPCR\Util\Console\Command\NodeRemoveCommand(),
-    new \PHPCR\Util\Console\Command\NodeTouchCommand(),
-
-    new \PHPCR\Util\Console\Command\NodeTypeListCommand(),
-    new \PHPCR\Util\Console\Command\NodeTypeRegisterCommand(),
-
-    new \PHPCR\Util\Console\Command\WorkspaceCreateCommand(),
-    new \PHPCR\Util\Console\Command\WorkspaceDeleteCommand(),
-    new \PHPCR\Util\Console\Command\WorkspaceExportCommand(),
-    new \PHPCR\Util\Console\Command\WorkspaceImportCommand(),
-    new \PHPCR\Util\Console\Command\WorkspaceListCommand(),
-    new \PHPCR\Util\Console\Command\WorkspacePurgeCommand(),
-    new \PHPCR\Util\Console\Command\WorkspaceQueryCommand(),
-
-    new \Jackalope\Tools\Console\Command\InitDoctrineDbalCommand(),
-));
-$cli->run();
-
+\Jackalope\Tools\Console\Runner::run($helperSet);
