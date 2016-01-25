@@ -59,10 +59,17 @@ class Runner
             $session = self::createPhpcrSessionFromConfig($params);
 
             $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
-                'dialog' => new \Symfony\Component\Console\Helper\DialogHelper(),
                 'phpcr' => new \PHPCR\Util\Console\Helper\PhpcrHelper($session),
                 'phpcr_console_dumper' => new \PHPCR\Util\Console\Helper\PhpcrConsoleDumperHelper(),
             ));
+
+            // Replaced in symfony 3.
+            if (class_exists('Symfony\Component\Console\Helper\QuestionHelper')) {
+                $helperSet->set(new \Symfony\Component\Console\Helper\QuestionHelper(), 'question');
+            } else {
+                $helperSet->set(new \Symfony\Component\Console\Helper\DialogHelper(), 'dialog');
+            }
+
         } else if (isset($argv[1]) && $argv[1] == 'jackalope:init:dbal') {
             // special case: the init command needs the db connection, but a
             // session is impossible if the db is not yet initialized
